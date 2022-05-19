@@ -72,6 +72,7 @@ def build_image_from_tag(github_login: str, repo_name: str, tag: str,
         docker_tag,
         repo_url_with_tag
     ]
+    print("    Build command: " + " ".join(build_command))
     result = subprocess.run(build_command, capture_output=True)
     if result.returncode != 0:
         print("docker build failed. stdout: {}, stderr: {}"
@@ -90,6 +91,7 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
         form 'NAME:TAG'.
     :return: Whether or not the push was successful.
     """
+    print("    Docker push")
     username_end = tag.find("/")
     assert username_end != -1
     username = tag[0:username_end]
@@ -101,6 +103,7 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
         "--password",
         access_token
     ]
+    print("    Login command: " + " ".join(login_command))
     result = subprocess.run(login_command, capture_output=True)
     if result.returncode != 0:
         print("docker login failed. stdout: {}, stderr: {}"
@@ -111,6 +114,7 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
         "push",
         tag
     ]
+    print("    Push command: " + " ".join(push_command))
     result = subprocess.run(push_command, capture_output=True)
     if result.returncode != 0:
         print("docker push failed. stdout: {}, stderr: {}"
@@ -127,6 +131,7 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
         tag,
         latest_tag
     ]
+    print("    Tag command: " + " ".join(tag_command))
     result = subprocess.run(tag_command, capture_output=True)
     if result.returncode != 0:
         print("docker tag failed. stdout: {}, stderr: {}"
@@ -137,6 +142,7 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
         "push",
         latest_tag
     ]
+    print("    Push command: " + " ".join(push_command))
     result = subprocess.run(push_command, capture_output=True)
     if result.returncode != 0:
         print("docker push latest failed. stdout: {}, stderr: {}"
@@ -197,6 +203,7 @@ def update_fa_repos(github_access_token, docker_access_token):
         "docker-debian-testing-python-image",
     ]
     for repo in repos:
+        print(f"In repo {repo}")
         latest_tag = get_latest_tag(github_access_token, repo)
         if latest_tag is None:
             print("Failed to get latest tag in repo {}".format(repo))

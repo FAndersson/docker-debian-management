@@ -74,7 +74,9 @@ def update_fa_repos(tag_date):
             f"From {tag_date_iso} version of base dev image.",
     }
     for repo in repos:
+        print(f"In repo {repo}")
         repo_path = pathlib.Path(repo)
+        print(f"    Updating Dockerfile")
         # Update Dockerfile in repo, replacing old tag references with new tag
         with open(repo_path / "Dockerfile") as file:
             content = file.read()
@@ -98,6 +100,7 @@ def update_fa_repos(tag_date):
             file.write(content)
 
         # Commit changes to Dockerfile (if any)
+        print("    Committing changes")
         git_repo = Repo(repo_path)
         diff = git_repo.git.diff(git_repo.head.commit.tree)
         if diff:
@@ -110,6 +113,7 @@ def update_fa_repos(tag_date):
             new_tag = git_repo.create_tag(tag_date_iso, message=tag_messages[repo])
 
             # Push changes to origin
+            print("    Pushing changes to GitHub")
             git_repo.remotes.origin.push()
             git_repo.remotes.origin.push(new_tag)
 
