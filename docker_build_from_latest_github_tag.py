@@ -75,8 +75,8 @@ def build_image_from_tag(github_login: str, repo_name: str, tag: str,
     print("    Build command: " + " ".join(build_command))
     result = subprocess.run(build_command, capture_output=True)
     if result.returncode != 0:
-        print("docker build failed. stdout: {}, stderr: {}"
-              .format(result.stdout, result.stderr))
+        print(f"docker build failed. stdout: {result.stdout}, stderr: "
+              f"{result.stderr}")
         return None
     return docker_tag
 
@@ -106,8 +106,8 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
     print("    Login command: " + " ".join(login_command))
     result = subprocess.run(login_command, capture_output=True)
     if result.returncode != 0:
-        print("docker login failed. stdout: {}, stderr: {}"
-              .format(result.stdout, result.stderr))
+        print(f"docker login failed. stdout: {result.stdout}, stderr: "
+              f"{result.stderr}")
         return False
     push_command = [
         "docker",
@@ -117,8 +117,8 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
     print("    Push command: " + " ".join(push_command))
     result = subprocess.run(push_command, capture_output=True)
     if result.returncode != 0:
-        print("docker push failed. stdout: {}, stderr: {}"
-              .format(result.stdout, result.stderr))
+        print(f"docker push failed. stdout: {result.stdout}, stderr: "
+              f"{result.stderr}")
         return False
     # Also use new image as the new 'latest' version
     image_name_end = tag.find(":")
@@ -134,8 +134,8 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
     print("    Tag command: " + " ".join(tag_command))
     result = subprocess.run(tag_command, capture_output=True)
     if result.returncode != 0:
-        print("docker tag failed. stdout: {}, stderr: {}"
-              .format(result.stdout, result.stderr))
+        print(f"docker tag failed. stdout: {result.stdout}, stderr: "
+              f"{result.stderr}")
         return False
     push_command = [
         "docker",
@@ -145,8 +145,8 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
     print("    Push command: " + " ".join(push_command))
     result = subprocess.run(push_command, capture_output=True)
     if result.returncode != 0:
-        print("docker push latest failed. stdout: {}, stderr: {}"
-              .format(result.stdout, result.stderr))
+        print(f"docker push latest failed. stdout: {result.stdout}, "
+              f"stderr: {result.stderr}")
         return False
     return True
 
@@ -206,11 +206,11 @@ def update_fa_repos(github_access_token, docker_access_token):
         print(f"In repo {repo}")
         latest_tag = get_latest_tag(github_access_token, repo)
         if latest_tag is None:
-            print("Failed to get latest tag in repo {}".format(repo))
+            print(f"Failed to get latest tag in repo {repo}")
             return
         if not build_and_push_tag(github_login, repo, latest_tag, docker_login,
                                   docker_access_token):
-            print("Failed to build and push image for repo {}".format(repo))
+            print(f"Failed to build and push image for repo {repo}")
             return
 
 
