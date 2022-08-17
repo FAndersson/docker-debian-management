@@ -89,7 +89,7 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
         the image should be pushed to.
     :param tag: Specification of the image that should be pushed on the
         form 'NAME:TAG'.
-    :return: Whether or not the push was successful.
+    :return: Whether the push was successful.
     """
     print("    Docker push")
     username_end = tag.find("/")
@@ -168,7 +168,7 @@ def build_and_push_tag(github_login: str, github_repo_name: str,
         be pushed to.
     :param docker_access_token: Personal access token to the Docker hub
         account the image should be pushed to.
-    :return: Whether or not the image was successfully built and pushed
+    :return: Whether the image was successfully built and pushed
         to Docker hub.
     """
     image_tag = build_image_from_tag(github_login, github_repo_name,
