@@ -78,6 +78,8 @@ def build_image_from_tag(github_login: str, repo_name: str, tag: str,
         print(f"docker build failed. stdout: {result.stdout}, stderr: "
               f"{result.stderr}")
         return None
+    print(f"Docker image {docker_tag} built from GitHub repo {repo_name}, "
+          f"tag {tag}")
     return docker_tag
 
 
@@ -148,6 +150,7 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
         print(f"docker push latest failed. stdout: {result.stdout}, "
               f"stderr: {result.stderr}")
         return False
+    print(f"Docker image {tag} pushed to Docker hub.")
     return True
 
 
