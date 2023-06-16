@@ -105,7 +105,7 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
         "--password",
         access_token
     ]
-    print("    Login command: " + " ".join(login_command))
+    print(f"    Login command: `{' '.join(login_command[:-1] + ['****'])}`")
     result = subprocess.run(login_command, capture_output=True)
     if result.returncode != 0:
         print(f"docker login failed. stdout: {result.stdout}, stderr: "
@@ -116,7 +116,7 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
         "push",
         tag
     ]
-    print("    Push command: " + " ".join(push_command))
+    print(f"    Push command: `{' '.join(push_command)}`")
     result = subprocess.run(push_command, capture_output=True)
     if result.returncode != 0:
         print(f"docker push failed. stdout: {result.stdout}, stderr: "
@@ -133,7 +133,7 @@ def push_image_to_dockerhub(access_token: str, tag: str) -> bool:
         tag,
         latest_tag
     ]
-    print("    Tag command: " + " ".join(tag_command))
+    print(f"    Tag command: `{' '.join(tag_command)}`")
     result = subprocess.run(tag_command, capture_output=True)
     if result.returncode != 0:
         print(f"docker tag failed. stdout: {result.stdout}, stderr: "
