@@ -9,6 +9,7 @@ packages = [{include = "docker_debian_management"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 GitPython = "^3.1.31"
+pygithub = "^1.58.2"
 
 
 [build-system]
