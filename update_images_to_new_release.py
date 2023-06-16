@@ -106,7 +106,7 @@ def update_fa_repos(tag_date):
         if diff:
             index = git_repo.index
             index.add([str((repo_path / "Dockerfile").resolve())])
-            author = Actor("Fredrik Andersson", "fredrik.andersson@fcc.chalmers.se")
+            author = Actor("Fredrik Andersson", "fredrik.andersson@industrialpathsolutions.com")
             index.commit(commit_messages[repo], author=author, committer=author)
 
             # Tag latest commit
@@ -119,4 +119,4 @@ def update_fa_repos(tag_date):
 
 
 if __name__ == "__main__":
-    update_fa_repos("20220801")
+    update_fa_repos("20230612")
