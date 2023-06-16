@@ -21,7 +21,15 @@ Usage
 -----
 
 * Enter new Debian release date in `update_images_to_new_release.py` and run the
-  script. Working directory need to be the parent folder to all Docker
-  repositories.
+  script.
+
+    ```sh
+    poetry run python update_images_to_new_release.py
+    ```
+
 * Enter GitHub access token and Docker Hub access token in
   `docker_build_from_latest_github_tag.py` and run the script.
+
+    ```sh
+    poetry run python docker_build_from_latest_github_tag.py
+    ```
