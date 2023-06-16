@@ -76,7 +76,7 @@ def update_fa_repos(tag_date: str, folder: pathlib.Path = pathlib.Path("..")):
             f"From {tag_date_iso} version of base dev image.",
     }
     if not folder.absolute():
-        folder = Path(__file__).resolve().parent / folder
+        folder = pathlib.Path(__file__).resolve().parent / folder
     for repo in repos:
         print(f"In repo {repo}")
         repo_path = folder / pathlib.Path(repo)
