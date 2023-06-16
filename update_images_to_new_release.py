@@ -1,7 +1,22 @@
 import pathlib
 import re
+from typing import Optional
 
-from git import Actor, Repo
+from git import Actor, Repo, TagReference
+
+
+def get_tag(repo: Repo, tag_name: str) -> Optional[TagReference]:
+    """
+    Get a tag from a repository.
+
+    :param repo: Repository to get tag from.
+    :param tag_name: Name of the tag.
+    :return: Tag with given name, or None if no such tag exists.
+    """
+    for tag in repo.tags:
+        if tag.name == tag_name:
+            return tag
+    return None
 
 
 def update_fa_repos(tag_date: str, folder: pathlib.Path = pathlib.Path("..")):
@@ -113,13 +128,21 @@ def update_fa_repos(tag_date: str, folder: pathlib.Path = pathlib.Path("..")):
             author = Actor("Fredrik Andersson", "fredrik.andersson@industrialpathsolutions.com")
             index.commit(commit_messages[repo], author=author, committer=author)
 
-            # Tag latest commit
-            new_tag = git_repo.create_tag(tag_date_iso, message=tag_messages[repo])
+        # Remove any existing tag
+        tag = get_tag(git_repo, tag_date_iso)
+        if tag:
+            print("    Removing existing tag")
+            git_repo.delete_tag(tag)
+            git_repo.remotes.origin.push(refspec=f":refs/tags/{tag_date_iso}")
 
-            # Push changes to origin
-            print("    Pushing changes to GitHub")
-            git_repo.remotes.origin.push()
-            git_repo.remotes.origin.push(new_tag)
+        # Tag latest commit
+        print("    Tagging commit")
+        new_tag = git_repo.create_tag(tag_date_iso, message=tag_messages[repo])
+
+        # Push changes to origin
+        print("    Pushing changes to GitHub")
+        git_repo.remotes.origin.push(force=True)
+        git_repo.remotes.origin.push(new_tag)
 
 
 if __name__ == "__main__":
