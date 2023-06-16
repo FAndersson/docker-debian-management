@@ -4,12 +4,14 @@ import re
 from git import Actor, Repo
 
 
-def update_fa_repos(tag_date):
+def update_fa_repos(tag_date: str, folder: pathlib.Path = pathlib.Path("..")):
     """
     Update private Docker repos to be based on a new version of Debian.
 
     :param tag_date: Date for the new Debian Docker release, on the form
         '20211011'.
+    :param folder: Folder where the Docker repos are located. Absolute
+        or relative to this folder.
     """
     repos = [
         "docker-debian-stable-dev-image-base",
@@ -73,9 +75,11 @@ def update_fa_repos(tag_date):
         "docker-debian-testing-python-image":
             f"From {tag_date_iso} version of base dev image.",
     }
+    if not folder.absolute():
+        folder = Path(__file__).resolve().parent / folder
     for repo in repos:
         print(f"In repo {repo}")
-        repo_path = pathlib.Path(repo)
+        repo_path = folder / pathlib.Path(repo)
         print(f"    Updating Dockerfile")
         # Update Dockerfile in repo, replacing old tag references with new tag
         with open(repo_path / "Dockerfile") as file:
