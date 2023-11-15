@@ -149,4 +149,4 @@ def update_fa_repos(tag_date: str, folder: pathlib.Path = pathlib.Path(".."),
 
 
 if __name__ == "__main__":
-    update_fa_repos("20230612")
+    update_fa_repos("20231030")
