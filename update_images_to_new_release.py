@@ -19,7 +19,8 @@ def get_tag(repo: Repo, tag_name: str) -> Optional[TagReference]:
     return None
 
 
-def update_fa_repos(tag_date: str, folder: pathlib.Path = pathlib.Path("..")):
+def update_fa_repos(tag_date: str, folder: pathlib.Path = pathlib.Path(".."),
+                    push: bool = False):
     """
     Update private Docker repos to be based on a new version of Debian.
 
@@ -27,6 +28,7 @@ def update_fa_repos(tag_date: str, folder: pathlib.Path = pathlib.Path("..")):
         '20211011'.
     :param folder: Folder where the Docker repos are located. Absolute
         or relative to this folder.
+    :param push: Whether to push changes to GitHub.
     """
     repos = [
         "docker-debian-stable-dev-image-base",
@@ -139,10 +141,11 @@ def update_fa_repos(tag_date: str, folder: pathlib.Path = pathlib.Path("..")):
         print("    Tagging commit")
         new_tag = git_repo.create_tag(tag_date_iso, message=tag_messages[repo])
 
-        # Push changes to origin
-        print("    Pushing changes to GitHub")
-        git_repo.remotes.origin.push(force=True)
-        git_repo.remotes.origin.push(new_tag)
+        if push:
+            # Push changes to origin
+            print("    Pushing changes to GitHub")
+            git_repo.remotes.origin.push(force=True)
+            git_repo.remotes.origin.push(new_tag)
 
 
 if __name__ == "__main__":
