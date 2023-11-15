@@ -1,4 +1,3 @@
-import argparse
 import datetime
 import subprocess
 from typing import Optional
