@@ -13,23 +13,32 @@ When a new Debian version is released we want to update all of the images by:
 3. Rebuild images from the latest tag.
 4. Push new images to Docker Hub.
 
-The script `update_images_to_new_release.py` takes care of step 1. and 2. above.
-The script `docker_build_from_latest_github_tag.py` takes care of step 3. and 4.
+The script `update_dockerfiles_to_new_release.py` takes care of step 1. and 2. above.
+The script `docker_build_from_latest_tag.py` takes care of step 3. and 4.
 above.
 
 Usage
 -----
 
-* Enter new Debian release date in `update_images_to_new_release.py` and run the
-  script.
+* Enter new Debian release date in `update_dockerfiles_to_new_release.py` and
+  run the script.
 
     ```sh
-    poetry run python update_images_to_new_release.py
+    poetry run python update_dockerfiles_to_new_release.py
     ```
 
 * Enter GitHub access token and Docker Hub access token in
-  `docker_build_from_latest_github_tag.py` and run the script.
+  `docker_build_from_latest_tag.py` and run the script.
 
     ```sh
-    poetry run python docker_build_from_latest_github_tag.py
+    poetry run python docker_build_from_latest_tag.py
     ```
+
+Experimental updates
+--------------------
+
+The scripts can also be used to update and rebuild the images locally, without
+pushing to GitHub or Docker Hub. This is achieved by setting the `push=False`
+argument in the `update_dockerfiles_to_new_release.py` script, and by not
+providing GitHub or Docker Hub access tokens in the
+`docker_build_from_latest_tag.py` script.
