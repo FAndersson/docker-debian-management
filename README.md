@@ -27,8 +27,7 @@ Usage
     poetry run python update_dockerfiles_to_new_release.py
     ```
 
-* Enter GitHub access token and Docker Hub access token in
-  `docker_build_from_latest_tag.py` and run the script.
+* Run the script `docker_build_from_latest_tag.py`.
 
     ```sh
     poetry run python docker_build_from_latest_tag.py

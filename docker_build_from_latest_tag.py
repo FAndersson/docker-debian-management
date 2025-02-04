@@ -1,4 +1,5 @@
 import datetime
+from getpass import getpass
 import pathlib
 import subprocess
 import time
@@ -299,6 +300,6 @@ def update_fa_repos(
 
 
 if __name__ == "__main__":
-    # github_access_token = ...
-    # docker_access_token = ...
+    github_access_token = getpass("Enter GitHub access token: ")
+    docker_access_token = getpass("Enter Docker access token: ")
     update_fa_repos(github_access_token, docker_access_token)
