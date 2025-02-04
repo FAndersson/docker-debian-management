@@ -23,7 +23,7 @@ def get_latest_github_tag(access_token: str, repo_name: str) -> Optional[str]:
     g = github.Github(access_token)
     # Get repo with given name
     try:
-        repo = g.get_repo("{}/{}".format(g.get_user().login, repo_name))
+        repo = g.get_repo(f"{g.get_user().login}/{repo_name}")
     except github.GithubException:
         # Repo doesn't exist
         return None
@@ -99,8 +99,8 @@ def build_image_from_github_tag(github_login: str, repo_name: str, tag: str,
     assert repo_name[0:7] == "docker-"
     docker_image = repo_name[7:]
     docker_tag = f"{docker_login}/{docker_image}:{tag}"
-    repo_url = "https://github.com/{}/{}.git".format(github_login, repo_name)
-    repo_url_with_tag = repo_url + "#{}".format(tag)
+    repo_url = f"https://github.com/{github_login}/{repo_name}.git"
+    repo_url_with_tag = repo_url + f"#{tag}"
     build_command = [
         "docker",
         "build",
