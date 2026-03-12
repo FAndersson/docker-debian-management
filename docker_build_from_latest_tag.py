@@ -20,7 +20,7 @@ def get_latest_github_tag(access_token: str, repo_name: str) -> Optional[str]:
         tags.
     """
     # Get GitHub account from access token
-    g = github.Github(access_token)
+    g = github.Github(auth=github.Auth.Token(access_token))
     # Get repo with given name
     try:
         repo = g.get_repo(f"{g.get_user().login}/{repo_name}")
