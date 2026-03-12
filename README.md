@@ -24,13 +24,13 @@ Usage
   run the script.
 
     ```sh
-    poetry run python update_dockerfiles_to_new_release.py
+    uv run python update_dockerfiles_to_new_release.py
     ```
 
 * Run the script `docker_build_from_latest_tag.py`.
 
     ```sh
-    poetry run python docker_build_from_latest_tag.py
+    uv run python docker_build_from_latest_tag.py
     ```
 
 Experimental updates
